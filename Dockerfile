@@ -9,8 +9,7 @@ RUN apt-get update && \
     php5-fpm \
     git \
     supervisor && \
-    rm -rf /var/lib/apt/lists && \
-    rm -rf /var/tmp/*
+    rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite expires actions fastcgi headers alias && \
     echo 'opcache.memory_consumption = 128' >> /etc/php5/fpm/php.ini && \
