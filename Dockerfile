@@ -12,8 +12,6 @@ RUN apt-get update && \
 
 RUN a2enmod rewrite expires actions headers alias
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 RUN chown -R www-data:www-data /var/www
 
 VOLUME /var/www/html
@@ -24,4 +22,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/sbin/apache2ctl -D FOREGROUND"]
