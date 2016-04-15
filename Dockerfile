@@ -5,24 +5,16 @@ ENV REPOSITORY=GIT
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes --no-install-recommends \
-    apache2-mpm-event libapache2-mod-fastcgi \
-    php5-fpm \
+    libapache2-mod-php5 \
     git \
     supervisor && \
     rm -rf /var/lib/apt/lists/*
 
-RUN a2enmod rewrite expires actions fastcgi headers alias && \
-    echo 'opcache.memory_consumption = 128' >> /etc/php5/fpm/php.ini && \
-    echo 'opcache.max_accelerated_files = 4000' >> /etc/php5/fpm/php.ini && \
-    echo 'opcache.revalidate_freq = 240' >> /etc/php5/fpm/php.ini
+RUN a2enmod rewrite expires actions headers alias
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php5-fpm.conf /etc/apache2/conf-available/
 
-RUN chown -R www-data:www-data /var/www && \
-    touch /usr/lib/cgi-bin/php5.fcgi && \
-    chown -R www-data:www-data /usr/lib/cgi-bin && \
-    a2enconf php5-fpm
+RUN chown -R www-data:www-data /var/www
 
 VOLUME /var/www/html
 
