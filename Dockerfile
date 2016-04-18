@@ -5,7 +5,7 @@ ENV REPOSITORY=GIT
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes --no-install-recommends \
-    libapache2-mod-php5 \
+    libapache2-mod-php5 php5-mysql \
     git \
     supervisor && \
     rm -rf /var/lib/apt/lists/*
